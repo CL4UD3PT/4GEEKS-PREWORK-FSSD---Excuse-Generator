@@ -32,22 +32,18 @@ const when = [
   "while I was praying"
 ];
 
-// JUST FOR TESTING PURPOSES
-// cause "excuseConstructor" uses the spread syntax,
-// we can work with as many arrays as we want
-// if testing with this arrays,
-// don't forget to add them to excuseConstructor call
-//
-// const prepositions = ["in", "on", "at"];
-// const where = [
-//   "the carpet",
-//   "the toilet",
-//   "the dishwasher",
-//   "the apartment",
-//   "the roof"
-// ];
+const prepositions = ["in", "on", "at"];
+const where = [
+  "the carpet",
+  "the toilet",
+  "the dishwasher",
+  "the apartment",
+  "the roof"
+];
 
 // code
+const dataset = [possessivs, who, action, what, when, prepositions, where];
+
 function getElement(arr) {
   return arr[randomNumber(arr)];
 }
@@ -60,36 +56,19 @@ function randomNumber(arr) {
   return Math.floor(Math.random() * arr.length);
 }
 
-// function excuseConstructor(...Arrs) {
-//   let excuseCombi = [];
-//   let firstWordToCapitals = true;
-
-//   for (let arr of Arrs) {
-//     firstWordToCapitals
-//       ? (excuseCombi.push(wordCapitalizer(getElement(arr))),
-//         (firstWordToCapitals = false))
-//       : excuseCombi.push(getElement(arr));
-//   }
-
-//   return excuseCombi.join(" ");
-// }
-
-// const newExcuse = () => excuseConstructor(possessivs, who, action, what, when);
-
-const dataset = [possessivs, who, action, what, when];
-
-function getNewExcuse(data) {
+// implemented map() method. Thanks to Javier Seiglie
+function excuseConstructor(data) {
   return (generatedExcuse = data.map((el, i) =>
     i === 0 ? `${wordCapitalizer(getElement(el))}` : `${getElement(el)}`
   )).join(" ");
 }
 
-generatedExcuse = getNewExcuse(dataset);
+generatedExcuse = excuseConstructor(dataset);
 
 window.onload = () => {
   excuseHTMLElement.innerHTML = generatedExcuse;
 };
 
 btn.addEventListener("click", () => {
-  excuseHTMLElement.innerHTML = getNewExcuse(dataset);
+  excuseHTMLElement.innerHTML = excuseConstructor(dataset);
 });
