@@ -8,6 +8,7 @@ import "./assets/img/4geeks.ico";
 //variables
 const excuseHTMLElement = document.querySelector("#excuse");
 const btn = document.querySelector("#btnNewExcuse");
+let generatedExcuse = "";
 
 //data
 const possessivs = ["his", "her", "their", "our", "my", "your"];
@@ -59,26 +60,36 @@ function randomNumber(arr) {
   return Math.floor(Math.random() * arr.length);
 }
 
-function excuseConstructor(...Arrs) {
-  let excuseCombi = [];
-  let firstWordToCapitals = true;
+// function excuseConstructor(...Arrs) {
+//   let excuseCombi = [];
+//   let firstWordToCapitals = true;
 
-  for (let arr of Arrs) {
-    firstWordToCapitals
-      ? (excuseCombi.push(wordCapitalizer(getElement(arr))),
-        (firstWordToCapitals = false))
-      : excuseCombi.push(getElement(arr));
-  }
+//   for (let arr of Arrs) {
+//     firstWordToCapitals
+//       ? (excuseCombi.push(wordCapitalizer(getElement(arr))),
+//         (firstWordToCapitals = false))
+//       : excuseCombi.push(getElement(arr));
+//   }
 
-  return excuseCombi.join(" ");
+//   return excuseCombi.join(" ");
+// }
+
+// const newExcuse = () => excuseConstructor(possessivs, who, action, what, when);
+
+const dataset = [possessivs, who, action, what, when];
+
+function getNewExcuse(data) {
+  return (generatedExcuse = data.map((el, i) =>
+    i === 0 ? `${wordCapitalizer(getElement(el))}` : `${getElement(el)}`
+  )).join(" ");
 }
 
-const newExcuse = () => excuseConstructor(possessivs, who, action, what, when);
+generatedExcuse = getNewExcuse(dataset);
 
 window.onload = () => {
-  excuseHTMLElement.innerHTML = newExcuse();
+  excuseHTMLElement.innerHTML = generatedExcuse;
 };
 
-btn.addEventListener("click", function() {
-  excuseHTMLElement.innerHTML = newExcuse();
+btn.addEventListener("click", () => {
+  excuseHTMLElement.innerHTML = getNewExcuse(dataset);
 });
